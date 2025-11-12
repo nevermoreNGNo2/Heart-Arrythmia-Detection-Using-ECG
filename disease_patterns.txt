@@ -1,0 +1,27 @@
+
+
+It analyzes this list as a sequence to find these 4 significant patterns:
+
+1. Ventricular Tachycardia (V-Tach)
+
+What it is (Medically): A medical emergency. A run of 3 or more Ventricular ('V') beats in a row.
+
+How the Code Detects It: It iterates through the list and checks if the consecutive_v_count (beats labeled '2') reaches 3 or more. This is the most critical pattern it looks for.
+
+2. Supraventricular Tachycardia (SVT)
+
+What it is (Medically): A significant (but usually less dangerous) arrhythmia. A run of 3 or more Supraventricular ('S') beats in a row.
+
+How the Code Detects It: It iterates the list and checks if the consecutive_s_count (beats labeled '1') reaches 3 or more.
+
+3. Ectopic Couplets (Ventricular or Supraventricular)
+
+What it is (Medically): Two premature beats occurring back-to-back (e.g., 'V', 'V' or 'S', 'S'). This is more significant than a single isolated beat.
+
+How the Code Detects It: The code checks if the consecutive_v_count or consecutive_s_count equals 2.
+
+4. Significant Arrhythmia Burden
+
+What it is (Medically): This is when isolated premature beats (like a single 'V' or 'S') are not dangerous on their own, but they happen so frequently that they become clinically significant.
+
+How the Code Detects It: The code checks if the total percentage of 'V' beats (percent_v) or 'S' beats (percent_s) is greater than the V_BURDEN_THRESHOLD (which we set to 5.0%). This is what fixes the "1 beat = heart disease" problem you correctly identified.
